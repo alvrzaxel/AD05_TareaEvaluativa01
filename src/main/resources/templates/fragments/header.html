@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title></title>
+  </head>
+
+  <body>
+    <!-- Fragmento de plantilla reutilizable para el encabezado -->
+    <div th:fragment="header" class="border-bottom" style="background-color: #fafefd">
+
+      <!-- Contenedor principal del encabezado -->
+      <div class="container">
+
+        <!-- Barra de navegación con enlaces a diferentes secciones -->
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 text-custom">
+
+          <!-- Logo o nombre de la aplicación con enlace a la página principal -->
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <span class="fs-4">MyReads.</span>
+          </a>
+
+          <!-- Bloque de Thymeleaf para gestionar la activación de los enlaces -->
+          <th:block th:with="uri=${requestURI}">
+            <ul class="nav nav-pills">
+
+              <!-- Enlace a la página de inicio -->
+              <li class="nav-item">
+                <a href="/" class="nav-link" th:classappend="${uri == '/' ? ' active' : ''}" aria-current="page">Home</a>
+              </li>
+
+              <!-- Enlace a la sección de libros -->
+              <li class="nav-item">
+                <a href="/books" class="nav-link" th:classappend="${#strings.startsWith(requestURI, '/books') ? ' active' : ''}">Books</a>
+              </li>
+
+              <!-- Enlace a la sección de categorías -->
+              <li class="nav-item">
+                <a href="/categories" class="nav-link" th:classappend="${#strings.startsWith(requestURI, '/categories') ? ' active' : ''}">Categories</a>
+              </li>
+
+            </ul>
+          </th:block>
+
+        </header>
+
+      </div>
+    </div>
+
+  </body>
+</html>

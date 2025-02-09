@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title></title>
+  </head>
+
+  <body>
+    <!-- Fragmento reutilizable para el encabezado de la sección de libros -->
+    <div th:fragment="books-header" class="border-bottom">
+
+      <!-- Contenedor flexible para el título y el botón de añadir libros -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+
+        <!-- Sección izquierda: título y botón para añadir un nuevo libro -->
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+          <h1>Books</h1>
+          <a th:href="@{/books/new}" type="button" class="btn btn-outline-success">+ Book</a>
+        </div>
+
+        <!-- Sección derecha: menú de navegación por estados de los libros -->
+        <th:block th:with="uri=${requestURI}">
+          <ul class="nav nav-pills">
+
+            <!-- Enlace a la lista de todos los libros -->
+            <li class="nav-item" style="margin-right: 0.5rem">
+              <a href="/books" class="nav-link" th:classappend="${uri == '/books' ? ' active' : ''}">All</a>
+            </li>
+
+            <!-- Enlace a la lista de libros que se están leyendo actualmente -->
+            <li class="nav-item" style="margin-right: 0.5rem">
+              <a href="/books/currently" class="nav-link" th:classappend="${uri == '/books/currently' ? ' active' : ''}">Currently</a>
+            </li>
+
+            <!-- Enlace a la lista de libros pendientes de lectura -->
+            <li class="nav-item" style="margin-right: 0.5rem">
+              <a href="/books/toRead" class="nav-link" th:classappend="${uri == '/books/toRead' ? ' active' : ''}">To Read</a>
+            </li>
+
+            <!-- Enlace a la lista de libros ya leídos -->
+            <li class="nav-item" style="margin-right: 0.5rem">
+              <a href="/books/read" class="nav-link" th:classappend="${uri == '/books/read' ? ' active' : ''}">Read</a>
+            </li>
+
+          </ul>
+        </th:block>
+
+      </div>
+    </div>
+
+  </body>
+</html>

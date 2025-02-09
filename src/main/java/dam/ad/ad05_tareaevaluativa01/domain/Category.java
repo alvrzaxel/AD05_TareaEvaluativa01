@@ -5,29 +5,47 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entidad que representa una categoría de libros en la base datos
+ * Contiene el nombre de la categoría y una lista de los libros que pertenecen a la categoría
+ */
 @Entity
+@Table(name = "category")
 public class Category {
     
+    // Definición de la clave primaria con secuenciador
     @Id
-    @SequenceGenerator(name = "category_gen", sequenceName = "category_seq", allocationSize = 1)
+    @SequenceGenerator(name = "category_gen", sequenceName = "category_sqe", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_gen")
     private Long id;
     
+    // Atributo para almacenar el nombre de la categoría
     @Column
-    private String name; // Nombre de la categoría
+    private String name;
     
-    @OneToMany(mappedBy = "category")
-    private List<Book> books = new ArrayList<>(); // Libros de la categoría
+    // Relación OneToMany con la entidad Book
+    // Una categoría puede tener muchos libros
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Book> books = new ArrayList<>();
     
-    // Constructores
+    
+    // CONSTRUCTORES
+    // Constructor por defecto
     public Category() {}
     
-    public Category(String name, List<Book> books) {
+    // Constructor para inicializar con el atributo name
+    public Category(String name) {
         this.name = name;
+    }
+    
+    // Constructor con parámetros para inicializar todos los atributos
+    public Category(List<Book> books) {
+        super();
         this.books = books;
     }
     
-    // Getters / Setters
+    
+    // GETTERS / SETTERS
     public Long getId() {
         return id;
     }

@@ -1,57 +1,78 @@
 package dam.ad.ad05_tareaevaluativa01.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+/**
+ * Entidad que representa un libro en la base de datos
+ * Contiene la información del libro, como el título, autor, fecha de lectura, valoración,
+ * estado y categoría
+ */
 @Entity
+@Table(name = "book")
 public class Book {
     
+    // Definición de la clave primaria con secuenciador
     @Id
-    @SequenceGenerator(name = "book_gen", sequenceName = "book_seq", allocationSize = 1)
+    @SequenceGenerator(name = "book_gen", sequenceName = "book_sqe", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_gen")
-    private int id;
+    private Long id;
     
+    // Atributo para almacenar el título del libro
     @Column
-    private String title; // Título del libro
+    private String title;
     
+    // Atributo para almacenar el autor del libro
     @Column
-    private String author; // Author del libro
+    private String author;
     
+    // Atributo para almacenar la fecha en se leyó el libro
     @Column
     private LocalDate readDate; // Fecha de lectura
     
+    // Atributo para almacenar la valoración del libro
     @Column
-    @Min(1)
-    @Max(5)
-    private Integer rating; // Valoración
+    private Integer rating;
     
+    // Atributo para almacenar el estado del libro
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private BookStatus status;
+    
+    // Enumeración que define los posibles estados de un libro
+    public enum BookStatus {
+        TOREAD, CURRENTLY, READ;
+    }
+    
+    // Relación ManyToOne con la entidad Category
+    // Un libro puede tener una sola categoría
     @ManyToOne
-    private Category category; // Categoría del libro
+    private Category category;
     
-    @ManyToOne
-    private BookStatus status; // Estado del libro
     
-    // Constructores
+    // CONSTRUCTORES
+    // Constructor por defecto
     public Book() {}
     
-    public Book(String title, String author, LocalDate readDate, Integer rating, Category category, BookStatus status) {
+    // Constructor para inicializar todos los atributos del libro
+    public Book(String title, String author, LocalDate readDate, Integer rating, BookStatus status, Category category) {
         this.title = title;
         this.author = author;
         this.readDate = readDate;
         this.rating = rating;
-        this.category = category;
         this.status = status;
+        this.category = category;
     }
     
-    // Getters / Setters
-    public int getId() {
+    
+    // GETTERS / SETTERS
+    public Long getId() {
         return id;
     }
     
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     

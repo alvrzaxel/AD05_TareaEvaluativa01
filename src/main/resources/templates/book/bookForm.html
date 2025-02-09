@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Enlace a los estilos de Bootstrap desde un CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <!-- Enlace a los estilos personalizados -->
+    <link rel="stylesheet" href="/styles.css">
+    <title>Books - MyReads</title>
+</head>
+
+<body style="background-color: #c2cdd140;">
+    <!-- Inclusión del fragmento del encabezado -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <!-- Formulario de creación o edición de libro -->
+    <div class="form-content row g-3">
+        <form method="post" action="#" th:action="@{/books/new/submit}" th:object="${book}">
+            <!-- Título dinámico dependiendo de si el libro tiene o no un id -->
+            <h1>
+                <span th:text="${id} ? 'Edit' : 'New'"></span> Book
+            </h1>
+
+            <!-- Campo oculto para el id del libro -->
+            <input type="hidden" th:field="*{id}" id="id">
+
+            <!-- Campo de texto para el título del libro -->
+            <div class="col-12">
+                <label for="titleInput" class="form-label custom-label" >Title</label>
+                <input type="text" class="form-control form-custom" id="titleInput" placeholder="" value="" required="" th:field="*{title}">
+            </div>
+
+            <!-- Campo de texto para el autor del libro -->
+            <div class="col-8">
+                <label for="authorName" class="form-label custom-label">Author</label>
+                <input type="text" class="form-control form-custom" id="authorName" placeholder="" value="" required="" th:field="*{author}">
+            </div>
+
+            <!-- Selector para la categoría del libro -->
+            <div class="col-sm-6">
+                <label for="categoryInput" class="form-label custom-label">Category</label>
+                <select class="form-select form-custom" id="categoryInput" th:field="*{category}">
+                    <option value="" disabled selected th:if="${categories.isEmpty()}">No categories</option>
+                    <!-- Iteración sobre las categorías disponibles para mostrar en el selector -->
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                </select>
+            </div>
+
+            <!-- Selector de rating (valoración) del libro -->
+            <div class="col-sm-6">
+                <label for="'rating' + ${rating}" class="form-label custom-label">Rating</label>
+                <div style="display: flex; justify-content: space-between">
+                    <!-- Bucle para generar los botones de selección del rating -->
+                    <span th:each="rating : ${#numbers.sequence(0, 5)}">
+                        <input id="'rating' + ${rating}" type="radio" class="btn-check form-custom" name="rating" th:value="${rating}" required="" th:field="*{rating}" th:id="'rating' + ${rating}">
+                        <label class="btn btn-outline-primary form-custom" th:for="'rating' + ${rating}" th:text="${rating}"></label>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Selector para el estado del libro (por leer, leído, leyendo) -->
+            <div class="col-md-6">
+                <label for="statusInput" class="form-label custom-label">Status</label>
+                <select class="form-select form-custom" id="statusInput" th:field="*{status}" required="required">
+                    <option value="" disabled>Choose...</option>
+                    <option value="TOREAD" selected> Want to Read</option>
+                    <option value="READ">Read</option>
+                    <option value="CURRENTLY">Currently Reading</option>
+                </select>
+            </div>
+
+            <!-- Campo de fecha para la lectura del libro (aplicable si el libro ya ha sido leído) -->
+            <div class="col-sm-6">
+                <label for="readDateInput" class="form-label custom-label">Read Date</label>
+                <input type="date" class="form-control form-custom" id="readDateInput" name="readDate" th:value="*{readDate}">
+            </div>
+
+            <!-- Línea de separación -->
+            <hr class="my-4">
+
+            <!-- Botón de envío del formulario con texto dinámico dependiendo de si se está editando o creando el libro -->
+            <button class="w-100 btn btn-custom-primary btn-lg" type="submit">
+                <span th:text="${id} ? 'Edit' : 'Add'"></span> Book
+            </button>
+        </form>
+    </div>
+
+    <!-- Inclusión del fragmento del pie de página -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- Importación del script de Bootstrap -->
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</body>
+</html>

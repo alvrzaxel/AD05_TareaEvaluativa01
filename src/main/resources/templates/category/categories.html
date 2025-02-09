@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- Importación de thymeleaf -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Importación de Bootstrap desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <!-- Archivo CSS personalizado -->
+    <link rel="stylesheet" href="/styles.css">
+    <title>Categories - MyReads</title>
+</head>
+
+<body>
+    <!-- Inclusión del fragmento del encabezado -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <!-- Contenido principal de la página -->
+    <div class="page-content">
+
+        <!-- Título de la página de categorías -->
+        <h1>Categories</h1>
+
+        <!-- Enlace para agregar una nueva categoría -->
+        <a th:href="@{/categories/new}" type="button" class="btn btn-outline-success">+ Category</a>
+
+        <!-- Iteración sobre cada categoría para mostrar sus libros -->
+        <div th:each="category : ${categories}" style="margin: 4rem 0 8rem 0">
+
+            <!-- Nombre de la categoría -->
+            <h2 th:text="${category.name}" style="text-decoration: underline"></h2>
+
+            <!-- Tabla para mostrar los libros de la categoría -->
+            <table class="table" style="margin-top: 1rem">
+                <tr style="height: 60px">
+                    <!-- Encabezados de la tabla con los atributos de los libros -->
+                    <th scope="col" style="width: 19%;">TITLE</th>
+                    <th scope="col" style="width: 16%;">AUTHOR</th>
+                    <th scope="col" style="width: 13%;">CATEGORY</th>
+                    <th scope="col" style="width: 13%;">RATING</th>
+                    <th scope="col" style="width: 13%;">STATUS</th>
+                    <th scope="col" style="width: 13%;">READ DATE</th>
+                    <th scope="col" style="width: 13%">ACTIONS</th>
+                </tr>
+
+                <!-- Iteración sobre los libros de la categoría -->
+                <tr th:each="book : ${category.getBooks()}">
+
+                    <!-- Títulos de los libros -->
+                    <td th:text="${book.title}"></td>
+
+                    <!-- Autores de los libros -->
+                    <td th:text="${book.author}"></td>
+
+                    <!-- Categoría de cada libro -->
+                    <td th:text="${book.category.name}"></td>
+
+                    <!-- Valoración del libro (estrellas) -->
+                    <td>
+                        <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <span th:text="${i <= book.rating ? '⭐' : '☆'}"></span>
+                        </span>
+                    </td>
+
+                    <!-- Estado del libro, con un cambio de clase según el estado -->
+                    <td>
+                        <p th:class="'badge ' +
+                                   ${book.status.name() == 'TOREAD' ? 'bg-primary-subtle text-primary-emphasis rounded-pill' :
+                                   (book.status.name() == 'READ' ? 'bg-success-subtle text-success-emphasis rounded-pill' :
+                                   (book.status.name() == 'CURRENTLY' ? 'bg-warning-subtle text-warning-emphasis rounded-pill' : ''))}"
+                           class="rounded-pill"
+                           style="margin-top: 0.8rem !important;"
+                           th:text="${book.status.name()}">
+                        </p>
+                    </td>
+
+                    <!-- Fecha de lectura del libro -->
+                    <td th:text="${book.readDate}"></td>
+
+                    <!-- Acciones para editar y eliminar el libro -->
+                    <td>
+                        <a th:href="@{/books/edit/{id}(id=${book.id})}" type="button" class="btn btn-outline-info">Edit</a>
+                        <a th:href="@{/books/delete/{id}(id=${book.id})}" type="button" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+
+                <!-- Fila que muestra el número total de libros en la categoría -->
+                <tr style="min-height: 80px">
+                    <td style="font-weight: bold" colspan="7" th:text="'Total books: ' + (${category} != null ? ${category.getBooks().size()} : 0)"></td>
+                </tr>
+            </table>
+
+            <!-- Enlaces para editar o eliminar la categoría -->
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; max-width: 300px">
+                <a th:href="@{/categories/edit/{id}(id=${category.id})}" type="button" class="btn btn-outline-info">Edit Category</a>
+                <a th:href="@{/categories/delete/{id}(id=${category.id})}" type="button" class="btn btn-outline-danger">Delete Category</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Inclusión del fragmento del pie de página -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- Importación del script de Bootstrap -->
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</body>
+</html>

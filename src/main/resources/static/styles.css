@@ -1,0 +1,111 @@
+/* Cambiar el color de fondo de la barra de navegación */
+body {
+    /*background-color: #fafefd;*/
+    background-color: #c2cdd140;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+/* El contenido principal ocupará todo el espacio disponible */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background-color: #c2cdd140;
+}
+
+.page-content {
+    flex-grow: 1;
+    margin: 5rem 20rem;
+    flex-direction: column;
+}
+
+.form-content {
+    flex-grow: 1;
+    margin: 5rem 40rem;
+    flex-direction: column;
+}
+
+/* Cambiar el fondo del enlace cuando está activo */
+.nav-pills .nav-link.active {
+    background-color: #c2cdd140 !important;
+    color: black;
+    font-weight: 600;
+}
+
+.btn-custom-primary {
+    background-color: #4fd1c5;
+    color: black;
+    font-weight: 600;
+    --bs-btn-hover-bg: #82efe5;
+}
+
+/* Cambiar el color del texto para los enlaces no activos */
+.nav-pills .nav-link {
+    color: black;
+}
+
+.py-3 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 0 !important;
+}
+
+.mb-4 {
+    margin-bottom: 1rem !important;
+}
+
+.my-5 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.box-custom {
+    box-shadow: none !important;
+}
+
+.table td, .table tr {
+    vertical-align: middle;
+}
+
+.table {
+    --bs-table-bg: none;
+    --bs-table-border-color: rgba(98, 101, 102, 0.25);
+}
+
+.custom-label {
+    margin-top: 1.5rem;
+    font-weight: bold;
+}
+.form-custom {
+    background-color: #fafefd;
+}
+
+.text-gray {
+    color: gray !important;
+}
+
+.btn-outline-info {
+    --bs-btn-color: #4fd1c5;
+    --bs-btn-border-color: #4fd1c5;
+    --bs-btn-hover-color: black;
+    --bs-btn-hover-bg: #4fd1c5;
+    --bs-btn-hover-border-color: #4fd1c5;
+    --bs-btn-active-color: #4fd1c5;
+    --bs-btn-active-border-color: #4fd1c5;
+}
+
+.btn-primary {
+    --bs-btn-color: #4fd1c5;
+    --bs-btn-border-color: #4fd1c5;
+    --bs-btn-hover-color: black;
+    --bs-btn-hover-bg: #4fd1c5;
+    --bs-btn-hover-border-color: #4fd1c5;
+    --bs-btn-active-color: #4fd1c5;
+    --bs-btn-active-border-color: #4fd1c5;
+}
+

@@ -80,10 +80,15 @@
                     <!-- Fecha de lectura del libro -->
                     <td th:text="${book.readDate}"></td>
 
-                    <!-- Acciones para editar y eliminar el libro -->
+                    <!-- Botones de acción para editar y eliminar un libro -->
                     <td>
                         <a th:href="@{/books/edit/{id}(id=${book.id})}" type="button" class="btn btn-outline-info">Edit</a>
-                        <a th:href="@{/books/delete/{id}(id=${book.id})}" type="button" class="btn btn-outline-danger">Delete</a>
+
+                        <!-- Button para abrir el modal de eliminación de un libro-->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#BookModal"
+                                th:data-id="${book.id}" th:data-title="${book.title}">
+                            Delete
+                        </button>
                     </td>
                 </tr>
 
@@ -96,18 +101,108 @@
             <!-- Enlaces para editar o eliminar la categoría -->
             <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; max-width: 300px">
                 <a th:href="@{/categories/edit/{id}(id=${category.id})}" type="button" class="btn btn-outline-info">Edit Category</a>
+                <!--
                 <a th:href="@{/categories/delete/{id}(id=${category.id})}" type="button" class="btn btn-outline-danger">Delete Category</a>
+                -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#CategoryModal"
+                        th:data-categoryId="${category.id}" th:data-categoryName="${category.name}">
+                    Delete Category
+                </button>
             </div>
 
         </div>
     </div>
 
-    <!-- Inclusión del fragmento del pie de página -->
+    <!-- Modal de confirmación para eliminar un libro -->
+    <div class="modal fade" id="BookModal" tabindex="-1" aria-labelledby="BookModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteBookModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de eliminar el libro
+                    <span style="font-weight: bold">
+                        "<span id="bookTitle"></span>"
+                    </span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <!-- Botón para eliminar el libro -->
+                    <button id="deleteBookBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar una categoría y sus libros -->
+    <div class="modal fade" id="CategoryModal" tabindex="-1" aria-labelledby="CategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCategoryModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de eliminar la categoría
+                    <span style="font-weight: bold">
+                        "<span id="categoryName"></span>"
+                    </span> y todos sus libros?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <!-- Botón para eliminar la categoría -->
+                    <button id="deleteCategoryBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inclusión del pie de página -->
     <div th:replace="fragments/footer :: footer"></div>
 
-    <!-- Importación del script de Bootstrap -->
-    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+    <script>
+        // Manejo del botón de eliminación de un libro
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteBookButtons = document.querySelectorAll('[data-bs-target="#BookModal"]');
+            deleteBookButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const bookId = this.getAttribute("data-id");
+                    const bookTitle = this.getAttribute("data-title");
+                    document.getElementById("bookTitle").textContent = bookTitle;
+                    document.getElementById("deleteBookBtn").onclick = function () {
+                        window.location.href = "/categories/delete/book/" + bookId;
+                    };
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // Manejo del botón de eliminación de una categoría
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteCategoryButtons = document.querySelectorAll('[data-bs-target="#CategoryModal"]');
+            deleteCategoryButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const categoryId = this.getAttribute("data-categoryId");
+                    const categoryName = this.getAttribute("data-categoryName");
+                    document.getElementById("categoryName").textContent = categoryName;
+                    document.getElementById("deleteCategoryBtn").onclick = function () {
+                        window.location.href = "/categories/delete/" + categoryId;
+                    };
+                });
+            });
+        });
+    </script>
+
+    <!-- Importación del script de Bootstrap para funcionalidad de componentes -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>

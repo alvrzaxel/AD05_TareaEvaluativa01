@@ -1,6 +1,7 @@
 package dam.ad.ad05_tareaevaluativa01.controller;
 
 import dam.ad.ad05_tareaevaluativa01.domain.Category;
+import dam.ad.ad05_tareaevaluativa01.repository.BookRepository;
 import dam.ad.ad05_tareaevaluativa01.repository.CategoryRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class CategoriesController {
     // Inyección del repositorio para interactuar con la base de datos de categorías
     @Autowired
     CategoryRepository categoryRepository;
+    
+    @Autowired
+    BookRepository bookRepository;
     
     /**
      * Muestra el formulario para crear una nueva categoría
@@ -89,6 +93,22 @@ public class CategoriesController {
     public String deleteCategory(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
         // Elimina la categoría por su ID
         categoryRepository.deleteById(id);
+        return "redirect:/categories";
+    }
+    
+    /**
+     * Elimina un libro de la base de datos mediante su ID
+     * Redirige a la lista de categorías después de su eliminación
+     *
+     * @param id El ID del libro a eliminar
+     * @param model El modelo para pasar los datos a la vista
+     * @param request La solicitud HTTP para obtener la URI actual
+     * @return La redirección a la lista de categorías
+     */
+    @GetMapping("/delete/book/{id}")
+    public String deleteBookFromCategory(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+        // Elimina el libro por su ID
+        bookRepository.deleteById(id);
         return "redirect:/categories";
     }
 }

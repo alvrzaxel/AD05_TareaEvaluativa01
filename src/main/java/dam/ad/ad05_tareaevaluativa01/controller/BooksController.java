@@ -105,7 +105,6 @@ public class BooksController {
      * @param request La solicitud HTTP para obtener la URI actual
      * @return El nombre d el vista para el formulario de edición de libro
      */
-    
     @GetMapping("/edit/{id}")
     public String editBook(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
         try {

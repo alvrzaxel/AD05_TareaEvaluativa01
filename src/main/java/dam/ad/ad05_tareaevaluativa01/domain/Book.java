@@ -57,7 +57,8 @@ public class Book {
     public Book() {}
     
     // Constructor para inicializar todos los atributos del libro
-    public Book(String title, String author, LocalDate readDate, Integer rating, BookStatus status, Category category) {
+    public Book(
+            String title, String author, LocalDate readDate, Integer rating, BookStatus status, Category category) {
         this.title = title;
         this.author = author;
         this.readDate = readDate;

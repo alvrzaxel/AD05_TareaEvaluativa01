@@ -2,63 +2,93 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- Definición del parent POM, que proporciona configuraciones comunes para proyectos Spring Boot -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <!-- Se busca el POM parent en el repositorio -->
+        <relativePath/>
     </parent>
+
+    <!-- Información básica sobre el proyecto -->
     <groupId>dam.ad</groupId>
     <artifactId>AD05_TareaEvaluativa01</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>AD05_TareaEvaluativa01</name>
     <description>AD05_TareaEvaluativa01</description>
     <url/>
+
+    <!-- Licencias del proyecto -->
     <licenses>
         <license/>
     </licenses>
+
+    <!-- Información sobre los desarrolladores del proyecto -->
     <developers>
         <developer/>
     </developers>
+
+    <!-- Información de control de versiones -->
     <scm>
         <connection/>
         <developerConnection/>
         <tag/>
         <url/>
     </scm>
+
+    <!-- Propiedades del proyecto -->
     <properties>
+
+        <!-- Definición de la versión de Java utilizada en el proyecto -->
         <java.version>17</java.version>
     </properties>
+
+    <!-- Dependencias necesarias para el proyecto -->
     <dependencies>
+
+        <!-- Dependencia de Spring Boot para JPA (Java Persistence API) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- Dependencia de Spring Boot para Thymeleaf (motor de plantillas para la interfaz web) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+        <!-- Dependencia de Spring Boot para soporte web (controladores y páginas web) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Dependencia de Spring Boot DevTools para mejorar la experiencia de desarrollo (recarga en caliente) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- Dependencia para el controlador JDBC de Oracle (conexión a base de datos Oracle) -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc11</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Dependencia de Spring Boot para realizar pruebas (JUnit, etc.) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Dependencia de Hibernate Validator para validaciones en el lado del servidor -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -66,8 +96,11 @@
         </dependency>
     </dependencies>
 
+    <!-- Configuración del plugin para empaquetar y ejecutar la aplicación Spring Boot -->
     <build>
         <plugins>
+
+            <!-- Plugin para crear un archivo ejecutable JAR de Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

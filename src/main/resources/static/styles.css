@@ -1,6 +1,11 @@
-/* Cambiar el color de fondo de la barra de navegación */
+/**************************************************
+ * Autor: Axel Álvarez Santos
+ * Fecha: 15/02/2024
+ * Tarea: AD05 Tarea Evaluativa 01
+ **************************************************/
+
+/* Estilos para fondo de la barra de navegación */
 body {
-    /*background-color: #fafefd;*/
     background-color: #c2cdd140;
     min-height: 100vh;
     display: flex;
@@ -8,7 +13,7 @@ body {
     margin: 0;
 }
 
-/* El contenido principal ocupará todo el espacio disponible */
+/* Estilos para que el contenido principal ocupe todo el espacio disponible */
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -19,25 +24,28 @@ body {
     background-color: #c2cdd140;
 }
 
+/* Estilos para la página con un margen específico */
 .page-content {
     flex-grow: 1;
     margin: 5rem 20rem;
     flex-direction: column;
 }
 
+/* Estilos para formularios con márgenes más amplios */
 .form-content {
     flex-grow: 1;
     margin: 5rem 40rem;
     flex-direction: column;
 }
 
-/* Cambiar el fondo del enlace cuando está activo */
+/* Estilos para el fondo del enlace cuando está activo */
 .nav-pills .nav-link.active {
     background-color: #c2cdd140 !important;
     color: black;
     font-weight: 600;
 }
 
+/* Estilos para botón personalizado con color de fondo */
 .btn-custom-primary {
     background-color: #4fd1c5;
     color: black;
@@ -45,50 +53,61 @@ body {
     --bs-btn-hover-bg: #82efe5;
 }
 
-/* Cambiar el color del texto para los enlaces no activos */
+/* Estilos para los enlaces no activos */
 .nav-pills .nav-link {
     color: black;
 }
 
+/* Estilos para espaciado personalizado en el padding superior e inferior */
 .py-3 {
     padding-top: 1.5rem !important;
     padding-bottom: 0 !important;
 }
 
+/* Estilo para márgenes inferiores */
 .mb-4 {
     margin-bottom: 1rem !important;
 }
 
+/* Estilo para márgenes personalizados en los elementos */
 .my-5 {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
 
+/* Estilo sin sombras en las cajas personalizadas */
 .box-custom {
     box-shadow: none !important;
 }
 
+/* Estilo de alineación de contenido en la tabla */
 .table td, .table tr {
     vertical-align: middle;
 }
 
+/* Estilos para la tabla */
 .table {
     --bs-table-bg: none;
     --bs-table-border-color: rgba(98, 101, 102, 0.25);
 }
 
+/* Estilo para las etiquetas personalizadas */
 .custom-label {
     margin-top: 1.5rem;
     font-weight: bold;
 }
+
+/* Estilos para formularios con fondo personalizado */
 .form-custom {
     background-color: #fafefd;
 }
 
+/* Color de texto gris para elementos */
 .text-gray {
     color: gray !important;
 }
 
+/* Estilos para botones con borde y color personalizados */
 .btn-outline-info {
     --bs-btn-color: #4fd1c5;
     --bs-btn-border-color: #4fd1c5;
@@ -99,6 +118,7 @@ body {
     --bs-btn-active-border-color: #4fd1c5;
 }
 
+/* Estilos para el botón primario con color y borde personalizados */
 .btn-primary {
     --bs-btn-color: #4fd1c5;
     --bs-btn-border-color: #4fd1c5;

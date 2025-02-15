@@ -1,3 +1,9 @@
+<!--
+    Autor: Axel Álvarez Santos
+    Fecha: 15/02/2024
+    Tarea: AD05 Tarea Evaluativa 01
+-->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -25,19 +31,21 @@
                 <span th:text="${id} ? 'Edit' : 'New'"></span> Book
             </h1>
 
-            <!-- Campo oculto para el id del libro -->
+            <!-- Campo oculto para id del libro -->
             <input type="hidden" th:field="*{id}" id="id">
 
             <!-- Campo de texto para el título del libro -->
             <div class="col-12">
                 <label for="titleInput" class="form-label custom-label" >Title</label>
-                <input type="text" class="form-control form-custom" id="titleInput" placeholder="" value="" required="" th:field="*{title}">
+                <input type="text" class="form-control form-custom" id="titleInput" placeholder="" value=""
+                       required="" th:field="*{title}">
             </div>
 
             <!-- Campo de texto para el autor del libro -->
             <div class="col-8">
                 <label for="authorName" class="form-label custom-label">Author</label>
-                <input type="text" class="form-control form-custom" id="authorName" placeholder="" value="" required="" th:field="*{author}">
+                <input type="text" class="form-control form-custom" id="authorName" placeholder="" value=""
+                       required="" th:field="*{author}">
             </div>
 
             <!-- Selector para la categoría del libro -->
@@ -46,7 +54,8 @@
                 <select class="form-select form-custom" id="categoryInput" th:field="*{category}">
                     <option value="" disabled selected th:if="${categories.isEmpty()}">No categories</option>
                     <!-- Iteración sobre las categorías disponibles para mostrar en el selector -->
-                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    <option th:each="category : ${categories}" th:value="${category.id}"
+                            th:text="${category.name}"></option>
                 </select>
             </div>
 
@@ -56,8 +65,10 @@
                 <div style="display: flex; justify-content: space-between">
                     <!-- Bucle para generar los botones de selección del rating -->
                     <span th:each="rating : ${#numbers.sequence(0, 5)}">
-                        <input id="'rating' + ${rating}" type="radio" class="btn-check form-custom" name="rating" th:value="${rating}" required="" th:field="*{rating}" th:id="'rating' + ${rating}">
-                        <label class="btn btn-outline-primary form-custom" th:for="'rating' + ${rating}" th:text="${rating}"></label>
+                        <input id="'rating' + ${rating}" type="radio" class="btn-check form-custom" name="rating"
+                               th:value="${rating}" required="" th:field="*{rating}" th:id="'rating' + ${rating}">
+                        <label class="btn btn-outline-primary form-custom" th:for="'rating' + ${rating}"
+                               th:text="${rating}"></label>
                     </span>
                 </div>
             </div>
@@ -76,20 +87,71 @@
             <!-- Campo de fecha para la lectura del libro (aplicable si el libro ya ha sido leído) -->
             <div class="col-sm-6">
                 <label for="readDateInput" class="form-label custom-label">Read Date</label>
-                <input type="date" class="form-control form-custom" id="readDateInput" name="readDate" th:value="*{readDate}">
+                <input type="date" class="form-control form-custom" id="readDateInput" name="readDate"
+                       th:value="*{readDate}">
             </div>
 
             <!-- Línea de separación -->
             <hr class="my-4">
 
-            <!-- Botón de envío del formulario con texto dinámico dependiendo de si se está editando o creando el libro -->
-            <button class="w-100 btn btn-custom-primary btn-lg" type="submit">
+            <!-- Botón de envío del formulario con texto dinámico (está editando o creando el libro) -->
+            <button class="w-100 btn btn-custom-primary btn-lg" id="submitBtn" type="submit">
                 <span th:text="${id} ? 'Edit' : 'Add'"></span> Book
             </button>
         </form>
     </div>
 
+    <!-- Modal de advertencia si no existen categorías -->
+    <div class="modal fade" id="noCategoriesModal" tabindex="-1" aria-labelledby="noCategoriesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noCategoriesModalLabel">Categoría requerida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    No hay categorías creadas. Debes añadir al menos una categoría antes de poder registrar un libro.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+                    <!-- Botón para crear una nueva categoría -->
+                    <button id="creationCategoryBtn" type="button" class="btn btn-custom-primary" data-bs-dismiss="modal">
+                        + Category
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Inclusión del fragmento del pie de página -->
     <div th:replace="fragments/footer :: footer"></div>
+
+    <script>
+        // Control para avisar al usuario si no hay categorías creadas en la base de datos
+        document.getElementById('submitBtn').addEventListener('click', function (event) {
+            let categorySelect = document.getElementById('categoryInput');
+            let categoriesAvailable = categorySelect.options.length > 0 && categorySelect.value !== "";
+            if (!categoriesAvailable) {
+                event.preventDefault(); // Evita que el formulario se envíe
+                let modal = new bootstrap.Modal(document.getElementById('noCategoriesModal'));
+                modal.show();
+            }
+        });
+
+        // Redirige a la página para crear una nueva categoría si se pulsa el botón + Category
+        document.getElementById('creationCategoryBtn').addEventListener('click', function () {
+            window.location.href = "/categories/new";
+        });
+    </script>
+
+    <!-- Importación del script de Bootstrap para funcionalidad de componentes -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+            crossorigin="anonymous"></script>
 </body>
 </html>

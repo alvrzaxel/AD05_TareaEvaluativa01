@@ -1,3 +1,13 @@
+/**************************************************
+ * Autor: Axel Álvarez Santos
+ * Fecha: 15/02/2024
+ * Tarea: AD05 Tarea Evaluativa 01
+ **************************************************/
+
+/*
+    Carga de datos iniciales en la base de datos
+ */
+
 /*
 package dam.ad.ad05_tareaevaluativa01.bootstrap;
 
@@ -81,4 +91,5 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Number of books: " + bookRepository.count());
     }
 }
- */
+
+*/

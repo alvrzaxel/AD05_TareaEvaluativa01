@@ -1,7 +1,12 @@
+/**************************************************
+ * Autor: Axel Álvarez Santos
+ * Fecha: 15/02/2024
+ * Tarea: AD05 Tarea Evaluativa 01
+ **************************************************/
+
 package dam.ad.ad05_tareaevaluativa01.domain;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

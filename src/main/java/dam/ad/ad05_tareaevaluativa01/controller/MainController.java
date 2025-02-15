@@ -1,6 +1,11 @@
+/**************************************************
+ * Autor: Axel Álvarez Santos
+ * Fecha: 15/02/2024
+ * Tarea: AD05 Tarea Evaluativa 01
+ **************************************************/
+
 package dam.ad.ad05_tareaevaluativa01.controller;
 
-import dam.ad.ad05_tareaevaluativa01.domain.Book;
 import dam.ad.ad05_tareaevaluativa01.repository.BookRepository;
 import dam.ad.ad05_tareaevaluativa01.repository.CategoryRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
 
 /**
  * Controlador principal que gestiona las vistas principales de la aplicación,

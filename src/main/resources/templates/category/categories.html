@@ -1,3 +1,9 @@
+<!--
+    Autor: Axel Álvarez Santos
+    Fecha: 15/02/2024
+    Tarea: AD05 Tarea Evaluativa 01
+-->
+
 <!DOCTYPE html>
 <!-- Importación de thymeleaf -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
@@ -94,19 +100,18 @@
 
                 <!-- Fila que muestra el número total de libros en la categoría -->
                 <tr style="min-height: 80px">
-                    <td style="font-weight: bold" colspan="7" th:text="'Total books: ' + (${category} != null ? ${category.getBooks().size()} : 0)"></td>
+                    <td style="font-weight: bold" colspan="7"
+                        th:text="'Total books: ' + (${category} != null ? ${category.getBooks().size()} : 0)"></td>
                 </tr>
             </table>
 
             <!-- Enlaces para editar o eliminar la categoría -->
             <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; max-width: 300px">
                 <a th:href="@{/categories/edit/{id}(id=${category.id})}" type="button" class="btn btn-outline-info">Edit Category</a>
-                <!--
-                <a th:href="@{/categories/delete/{id}(id=${category.id})}" type="button" class="btn btn-outline-danger">Delete Category</a>
-                -->
-                <!-- Button trigger modal -->
+                <!-- Botón para abrir el modal de eliminación -->
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#CategoryModal"
-                        th:data-categoryId="${category.id}" th:data-categoryName="${category.name}">
+                        th:data-categoryId="${category.id}" th:data-categoryName="${category.name}"
+                        th:data-booksCount="${category.books.size()}">
                     Delete Category
                 </button>
             </div>
@@ -129,7 +134,9 @@
                     </span>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
                     <!-- Botón para eliminar el libro -->
                     <button id="deleteBookBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         Eliminar
@@ -152,9 +159,13 @@
                     <span style="font-weight: bold">
                         "<span id="categoryName"></span>"
                     </span> y todos sus libros?
+                    <span style="font-weight: lighter; font-style: italic" id="bookCount"></span>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
                     <!-- Botón para eliminar la categoría -->
                     <button id="deleteCategoryBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         Eliminar
@@ -192,7 +203,9 @@
                 button.addEventListener("click", function () {
                     const categoryId = this.getAttribute("data-categoryId");
                     const categoryName = this.getAttribute("data-categoryName");
+                    const booksCount = this.getAttribute("data-booksCount")
                     document.getElementById("categoryName").textContent = categoryName;
+                    document.getElementById("bookCount").textContent = 'Total de libros a eliminar: ' + booksCount;
                     document.getElementById("deleteCategoryBtn").onclick = function () {
                         window.location.href = "/categories/delete/" + categoryId;
                     };
@@ -202,7 +215,11 @@
     </script>
 
     <!-- Importación del script de Bootstrap para funcionalidad de componentes -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+            crossorigin="anonymous"></script>
 </body>
 </html>
